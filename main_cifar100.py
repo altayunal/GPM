@@ -134,7 +134,7 @@ def train_projected(args,model,device,x,y,optimizer,criterion,feature_mat,task_i
     model.train()
     r=np.arange(x.size(0))
     np.random.shuffle(r)
-    r=torch.LongTensor(r).to(device)
+    r=torch.LongTensor(r).to("cpu")
     # Loop batches
     for i in range(0,len(r),args.batch_size_train):
         if i+args.batch_size_train<=len(r): b=r[i:i+args.batch_size_train]
@@ -165,7 +165,7 @@ def test(args, model, device, x, y, criterion, task_id):
     correct = 0
     r=np.arange(x.size(0))
     np.random.shuffle(r)
-    r=torch.LongTensor(r).to(device)
+    r=torch.LongTensor(r).to("cpu")
     with torch.no_grad():
         # Loop batches
         for i in range(0,len(r),args.batch_size_test):
@@ -189,7 +189,7 @@ def get_representation_matrix (net, device, x, y=None):
     # Collect activations by forward pass
     r=np.arange(x.size(0))
     np.random.shuffle(r)
-    r=torch.LongTensor(r).to(device)
+    r=torch.LongTensor(r).to("cpu")
     b=r[0:125] # Take 125 random samples 
     example_data = x[b]
     example_data = example_data.to(device)
